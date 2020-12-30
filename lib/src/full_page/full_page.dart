@@ -311,6 +311,7 @@ class _FullPageState extends State<FullPage> {
           backgroundColor: Colors.white,
           appBar: AppBar(
             title: _buildHead(),
+            centerTitle: true,
           ),
           body: SafeArea(
               bottom: true,
@@ -345,7 +346,7 @@ class ListWidget extends StatelessWidget {
                   bottom: BorderSide(color: theme.dividerColor, width: 1.0))),
           child: ListTileTheme(
             child: ListTile(
-              title: Text(item.name),
+              title: Text(item.name,style: Theme.of(context).textTheme.bodyText1,),
               // item 标题
               dense: true,
               // item 直观感受是整体大小
