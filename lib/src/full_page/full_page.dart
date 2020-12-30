@@ -312,6 +312,7 @@ class _FullPageState extends State<FullPage> {
           appBar: AppBar(
             title: _buildHead(),
             centerTitle: true,
+            elevation: 0.7,
           ),
           body: SafeArea(
               bottom: true,
@@ -352,7 +353,7 @@ class ListWidget extends StatelessWidget {
               dense: true,
               // item 直观感受是整体大小
               trailing: selectedId == item.code
-                  ? Icon(Icons.check, color: theme.primaryColor)
+                  ? Icon(Icons.check, color: theme.selectedRowColor)
                   : null,
               contentPadding: EdgeInsets.fromLTRB(24.0, .0, 24.0, 3.0),
               // item 内容内边距
