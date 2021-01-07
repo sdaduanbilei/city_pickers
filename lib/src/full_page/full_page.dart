@@ -34,6 +34,7 @@ enum Status {
   Province,
   City,
   Area,
+  Village,
   Over,
 }
 
@@ -72,6 +73,9 @@ class _FullPageState extends State<FullPage> {
 
   /// the target area user selected
   Point targetArea;
+
+  /// the target area user selected
+  Point targetVillage;
 
   @override
   void initState() {
@@ -127,7 +131,15 @@ class _FullPageState extends State<FullPage> {
           if (_area.code == _locationCode) {
             targetCity = _city;
             targetArea = _area;
+            targetVillage = _getTargetChildFirst(_area) ?? null;
           }
+          _area.child.forEach((Point _village) {
+            if (_village.code == _locationCode) {
+              targetCity = _city;
+              targetArea = _area;
+              targetVillage = _village;
+            }
+          });
         });
       });
     } else {
@@ -140,6 +152,9 @@ class _FullPageState extends State<FullPage> {
     }
     if (targetArea == null) {
       targetArea = _getTargetChildFirst(targetCity);
+    }
+    if (targetVillage == null) {
+      targetVillage = _getTargetChildFirst(targetArea);
     }
   }
 
@@ -164,6 +179,17 @@ class _FullPageState extends State<FullPage> {
         result.cityName = targetCity != null ? targetCity.name : null;
         result.areaId = targetArea != null ? targetArea.code.toString() : null;
         result.areaName = targetArea != null ? targetArea.name : null;
+      }
+      if (showType.contain(ShowType.v)) {
+        result.provinceId = targetProvince.code.toString();
+        result.provinceName = targetProvince.name;
+        result.cityId = targetCity != null ? targetCity.code.toString() : null;
+        result.cityName = targetCity != null ? targetCity.name : null;
+        result.areaId = targetArea != null ? targetArea.code.toString() : null;
+        result.areaName = targetArea != null ? targetArea.name : null;
+        result.villageId =
+            targetArea != null ? targetVillage.code.toString() : null;
+        result.villageName = targetArea != null ? targetVillage.name : null;
       }
     } catch (e) {
       print('Exception details:\n _buildResult error \n $e');
@@ -212,6 +238,12 @@ class _FullPageState extends State<FullPage> {
     });
   }
 
+  _onVillageSelect(Point village) {
+    this.setState(() {
+      targetVillage = village;
+    });
+  }
+
   int _getSelectedId() {
     int selectId;
     switch (pageStatus) {
@@ -223,6 +255,9 @@ class _FullPageState extends State<FullPage> {
         break;
       case Status.Area:
         selectId = targetArea.code;
+        break;
+      case Status.Village:
+        selectId = targetVillage.code;
         break;
       case Status.Over:
         break;
@@ -247,6 +282,7 @@ class _FullPageState extends State<FullPage> {
         if (nextItemList.isEmpty) {
           targetCity = null;
           targetArea = null;
+          targetVillage = null;
           nextStatus = Status.Over;
         }
         break;
@@ -259,12 +295,25 @@ class _FullPageState extends State<FullPage> {
         }
         if (nextItemList.isEmpty) {
           targetArea = null;
+          targetVillage = null;
           nextStatus = Status.Over;
         }
         break;
       case Status.Area:
-        nextStatus = Status.Over;
         _onAreaSelect(targetPoint);
+        nextStatus = Status.Village;
+        nextItemList = targetArea.child;
+        if (!widget.showType.contain(ShowType.v)) {
+          nextStatus = Status.Over;
+        }
+        if (nextItemList.isEmpty) {
+          targetVillage = null;
+          nextStatus = Status.Over;
+        }
+        break;
+      case Status.Village:
+        nextStatus = Status.Over;
+        _onVillageSelect(targetPoint);
         break;
       case Status.Over:
         break;
@@ -296,6 +345,9 @@ class _FullPageState extends State<FullPage> {
         break;
       case Status.Area:
         title = targetCity.name;
+        break;
+      case Status.Village:
+        title = targetArea.name;
         break;
       case Status.Over:
         break;
@@ -347,8 +399,12 @@ class ListWidget extends StatelessWidget {
                   bottom: BorderSide(color: theme.dividerColor, width: 1.0))),
           child: ListTileTheme(
             child: ListTile(
-              title: Text(item.name,style:selectedId == item.code
-                  ?  Theme.of(context).textTheme.bodyText1 : Theme.of(context).textTheme.bodyText2,),
+              title: Text(
+                item.name,
+                style: selectedId == item.code
+                    ? Theme.of(context).textTheme.bodyText1
+                    : Theme.of(context).textTheme.bodyText2,
+              ),
               // item 标题
               dense: true,
               // item 直观感受是整体大小

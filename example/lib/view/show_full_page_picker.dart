@@ -13,7 +13,7 @@ import 'package:city_pickers/city_pickers.dart';
 import '../src/attr_item_container.dart';
 import '../src/location_selector.dart';
 import '../src/picker.dart';
-import '../meta/province.dart';
+import '../meta/province_nm.dart';
 
 var emptyResult = new Result();
 
@@ -23,7 +23,7 @@ class ShowFullPageCityPicker extends StatefulWidget {
 }
 
 class _ShowFullPageCityPickerState extends State<ShowFullPageCityPicker> {
-  PickerItem showTypeAttr = PickerItem(name: '省+市+县', value: ShowType.pca);
+  PickerItem showTypeAttr = PickerItem(name: '省+市+县+乡', value: ShowType.pcav);
   Result resultAttr = new Result();
   Result result = new Result();
   double barrierOpacityAttr = 0.5;
@@ -48,6 +48,7 @@ class _ShowFullPageCityPickerState extends State<ShowFullPageCityPicker> {
         PickerItem(name: '省+市', value: ShowType.pc),
         PickerItem(name: '省+市+县', value: ShowType.pca),
         PickerItem(name: '市+县', value: ShowType.ca),
+        PickerItem(name: '省+市+县+乡', value: ShowType.pcav)
       ],
     );
   }
@@ -164,8 +165,8 @@ class _ShowFullPageCityPickerState extends State<ShowFullPageCityPicker> {
                           resultAttr.provinceId
                       : null,
                   showType: showTypeAttr.value,
-                  citiesData: customerMeta ? citiesData : null,
-                  provincesData: customerMeta ? provincesData : null);
+                  citiesData: customerMeta ? citiesDataNm : null,
+                  provincesData: customerMeta ? provincesDataNm : null);
               if (tempResult == null) {
                 return;
               }
