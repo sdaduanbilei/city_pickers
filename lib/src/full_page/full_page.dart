@@ -188,8 +188,8 @@ class _FullPageState extends State<FullPage> {
         result.areaId = targetArea != null ? targetArea.code.toString() : null;
         result.areaName = targetArea != null ? targetArea.name : null;
         result.villageId =
-            targetArea != null ? targetVillage.code.toString() : null;
-        result.villageName = targetArea != null ? targetVillage.name : null;
+            targetVillage != null ? targetVillage.code.toString() : null;
+        result.villageName = targetVillage != null ? targetVillage.name : null;
       }
     } catch (e) {
       print('Exception details:\n _buildResult error \n $e');
