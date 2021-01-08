@@ -5,13 +5,6 @@ const Map<String, String> provincesDataNm = {
 };
 
 const Map<String, dynamic> citiesDataNm = {
-  "150000": {
-    "150600": {"name": "鄂尔多斯市", "alpha": "e"},
-  },
-  "150600": {
-    "150602": {"name": "东胜区", "alpha": "d"},
-    "150603": {"name": "康巴什区", "alpha": "k"}
-  },
   "150602": {
     "150602001": {"name": "交通街道办事处", "alpha": "j"},
     "150602002": {"name": "公园街道办事处", "alpha": "g"},
@@ -32,6 +25,14 @@ const Map<String, dynamic> citiesDataNm = {
     "150602401": {"name": "东胜区轻纺工业园区", "alpha": "d"},
     "150602404": {"name": "铜川汽车博览园", "alpha": "t"}
   },
+  "150000": {
+    "150600": {"name": "鄂尔多斯市", "alpha": "e"},
+  },
+  "150600": {
+    "150602": {"name": "东胜区", "alpha": "d"},
+    "150603": {"name": "康巴什区", "alpha": "k"}
+  },
+
   "150603": {
     "150603001": {"name": "哈巴格希街道办事处", "alpha": "h"},
     "150603002": {"name": "青春山街道办事处", "alpha": "q"},

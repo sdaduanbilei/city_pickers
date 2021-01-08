@@ -256,9 +256,11 @@ class _FullPageState extends State<FullPage> {
       case Status.Area:
         selectId = targetArea.code;
         break;
-      case Status.Village:
-        selectId = targetVillage.code ?? 0;
-        break;
+//      case Status.Village:
+//        selectId = targetVillage.code ?? 0;
+//        debugPrint('-----------');
+//        debugPrint('$targetVillage.code');
+//        break;
       case Status.Over:
         break;
     }
